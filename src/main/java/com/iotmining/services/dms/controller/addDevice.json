@@ -1,0 +1,33 @@
+//{
+//  "tenantId": "tenant-123",
+//  "name": "Living Room Thermostat",
+//  "category": "SENSOR",
+//  "type": "TEMPERATURE_SENSOR",
+//  "protocol": "MQTT",
+//  "state": "ACTIVE",
+//  "attributes": {
+//    "manufacturer": "Nest",
+//    "model": "T3007ES",
+//    "firmwareVersion": "5.6.2",
+//    "location": "Living Room",
+//    "batteryLevel": 85,
+//    "threshold": {
+//      "min": 18,
+//      "max": 28
+//    }
+//  }
+//}
+{
+  "deviceName": "Temperature Sensor TS-100",
+  "category": "SECURITY",
+  "deviceType": "CAMERA",
+  "state": "IDLE",
+  "protocol": "MQTT",
+  "deviceId": "ts-100-xyz-001",
+  "deviceToken": "abc123xyz-token",
+  "location": "Room 101, Floor 1, Building A",
+  "attributes": "{\"unit\":\"Celsius\",\"precision\":\"0.1\",\"range\":\"-40 to 125\"}",
+  "createdAt": "2025-04-14T09:30:00",
+  "updatedAt": "2025-04-14T10:45:00",
+  "accessToken": ""
+}

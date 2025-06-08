@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/iotmining
+    username: postgres
+    password: 8506
+    hikari:
+      pool-name: LoginServicePool
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 30000
+      connection-timeout: 2000
+      max-lifetime: 1800000
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database: postgresql
+#  cassandra:
+#    contact-points: 127.0.0.1
+#    port: 9042
+#    keyspace-name: dms_data
+#    schema-action: CREATE_IF_NOT_EXISTS
+#    #    username: cassandra
+#    #    password: cassandra
+#    local-datacenter: datacenter1
+
+flyway:
+  locations: classpath:db/migration
+  keyspace: iotmining
+  enabled: true
+  driver-class-name: org.flywaydb.database.cassandra.CassandraDriver
+  baseline-on-migrate: true
+
+
+server:
+  port: 8084

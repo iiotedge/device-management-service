@@ -1,0 +1,2 @@
+DELETE /api/devices/{deviceId}?tenantId=tenant-123
+GET /api/devices/{deviceId}?tenantId=tenant-123

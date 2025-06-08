@@ -1,0 +1,11 @@
+{
+  "name": "Bedroom Thermostat",
+  "category": "SENSOR",
+  "type": "TEMPERATURE_SENSOR",
+  "protocol": "MQTT",
+  "state": "INACTIVE",
+  "attributes": {
+    "location": "Bedroom",
+    "batteryLevel": 70
+  }
+}
