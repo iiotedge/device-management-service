@@ -18,4 +18,4 @@ flyway:
   password: ${SPRING_CASSANDRA_PASSWORD:cassandra}
 
 server:
-  port: ${SERVER_PORT:8084}
+  port: ${SERVER_PORT:9055}

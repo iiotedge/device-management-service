@@ -13,7 +13,8 @@ spring:
       max-lifetime: 1800000
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
+#      ddl-auto: create-drop
     database: postgresql
 #  cassandra:
 #    contact-points: 127.0.0.1
@@ -33,4 +34,4 @@ flyway:
 
 
 server:
-  port: 8084
+  port: 8055
