@@ -42,7 +42,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout common (shared modules: data, base, utils)
+      - name: Checkout common (shared modules - data, base, utils)
         uses: actions/checkout@v4
         with:
           repository: iiotedge/common
