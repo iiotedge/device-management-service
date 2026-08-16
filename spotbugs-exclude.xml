@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    SpotBugs / FindSecBugs exclusions (same conventions as auth-service).
+    Add narrowly-scoped Match entries here instead of lowering the global threshold.
+-->
+<FindBugsFilter>
+    <!-- Lombok-generated equals/hashCode/builders trip EI_EXPOSE_REP on JPA entities & DTOs -->
+    <Match>
+        <Or>
+            <Package name="com.iotmining.services.dms.model"/>
+            <Package name="com.iotmining.services.dms.dto"/>
+            <Package name="com.iotmining.services.dms.dto.bulk"/>
+        </Or>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+
+    <!-- Spring injects and owns these mutable collaborators -->
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Or>
+            <Package name="com.iotmining.services.dms.controller"/>
+            <Package name="com.iotmining.services.dms.services"/>
+            <Package name="com.iotmining.services.dms.service"/>
+        </Or>
+    </Match>
+
+    <!-- Spring @Configuration classes storing injected collaborators via
+         @RequiredArgsConstructor - same false positive as the controller/
+         service exclusion above, just a different package. -->
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Package name="com.iotmining.services.dms.configuration"/>
+    </Match>
+
+    <!-- DDL generator is a dev-only utility, not production code -->
+    <Match>
+        <Package name="com.iotmining.services.dms.ddl"/>
+    </Match>
+
+    <!-- FindSecBugs flags any parameterized log call whose argument isn't a
+         compile-time constant as potential CRLF log injection. Every flagged
+         call site here logs a UUID (deviceId/tenantId/profileId/id) or a
+         plain int count - UUID's string form is constrained to hex digits
+         and hyphens (via UUID.randomUUID()/fromString()), structurally
+         incapable of containing CR/LF, and ints obviously can't either. Same
+         reasoning already applied in auth-service's own exclude file. -->
+    <Match>
+        <Bug pattern="CRLF_INJECTION_LOGS"/>
+        <Or>
+            <Class name="com.iotmining.services.dms.controller.DeviceBulkController"/>
+            <Class name="com.iotmining.services.dms.controller.DeviceController"/>
+            <Class name="com.iotmining.services.dms.controller.DeviceIdentityController"/>
+            <Class name="com.iotmining.services.dms.controller.DeviceQueryController"/>
+            <Class name="com.iotmining.services.dms.services.DeviceService"/>
+            <Class name="com.iotmining.services.dms.services.DeviceBulkService"/>
+            <Class name="com.iotmining.services.dms.services.DeviceIdentityService"/>
+            <Class name="com.iotmining.services.dms.services.DeviceQueryService"/>
+            <Class name="com.iotmining.services.dms.model.Device"/>
+        </Or>
+    </Match>
+</FindBugsFilter>

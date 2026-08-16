@@ -1,0 +1,4 @@
+# Keep the build context small and avoid ever baking local secrets/state
+# into an image layer - only target/device-management-service.jar is needed.
+*
+!target/device-management-service.jar

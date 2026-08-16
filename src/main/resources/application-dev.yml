@@ -1,37 +1,130 @@
 spring:
+  config:
+    activate:
+      on-profile: dev
+
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/iotmining
     username: postgres
     password: 8506
     hikari:
-      pool-name: LoginServicePool
+      pool-name: DeviceServicePool-Dev
       maximum-pool-size: 10
       minimum-idle: 5
       idle-timeout: 30000
       connection-timeout: 2000
       max-lifetime: 1800000
+
   jpa:
     hibernate:
-      ddl-auto: update
-#      ddl-auto: create-drop
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
+    show-sql: true
     database: postgresql
-#  cassandra:
-#    contact-points: 127.0.0.1
-#    port: 9042
-#    keyspace-name: dms_data
-#    schema-action: CREATE_IF_NOT_EXISTS
-#    #    username: cassandra
-#    #    password: cassandra
-#    local-datacenter: datacenter1
 
-flyway:
-  locations: classpath:db/migration
-  keyspace: iotmining
-  enabled: true
-  driver-class-name: org.flywaydb.database.cassandra.CassandraDriver
-  baseline-on-migrate: true
+  # Standard Flyway for Local
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+  cloud:
+    openfeign:
+          client:
+            config:
+              default:
+                connectTimeout: 5000 # 5 seconds to connect
+                readTimeout: 5000    # 5 seconds to read
+                loggerLevel: BASIC   # Logs the HTTP request/response to help you debug
 
 
-server:
-  port: 8055
+        #server:
+
+jwt:
+  secret: "Vlo2vcFdiXGgWqZLEpLw6kk99sH8/4odgC2XgZV0IbA="
+
+internal:
+  api:
+    key: "sk_internal_9f8d7c6b5a4e3d2c1b0a9f8e7d6c5b4a"
+
+app:
+  services:
+    device-profile:
+#      url: "http://localhost:8087"
+#      url: "http://localhost:8056"
+      url: ${SERVICES_DEVICE_PROFILE_SERVICE_URL:http://localhost:8056}
+
+
+#  port: 8055
+#
+#spring:
+#  application:
+#    name: device-management-service
+#  profiles:
+#    active: dev
+#
+#  datasource:
+#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://localhost:5432/iotmining
+#    username: postgres
+#    password: 8506
+#    hikari:
+#      pool-name: DeviceServicePool-Dev
+#      maximum-pool-size: 10
+#      minimum-idle: 5
+#      idle-timeout: 30000
+#      connection-timeout: 2000
+#      max-lifetime: 1800000
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    database: postgresql
+#    show-sql: true
+#
+#  jackson:
+#    default-property-inclusion: non_null
+#
+#  # Standard Flyway for PostgreSQL
+#  flyway:
+#    enabled: true
+#    baseline-on-migrate: true
+#    locations: classpath:db/migration
+#
+#
+#    #spring:
+##  datasource:
+##    driver-class-name: org.postgresql.Driver
+##    url: jdbc:postgresql://localhost:5432/iotmining
+##    username: postgres
+##    password: 8506
+##    hikari:
+##      pool-name: LoginServicePool
+##      maximum-pool-size: 10
+##      minimum-idle: 5
+##      idle-timeout: 30000
+##      connection-timeout: 2000
+##      max-lifetime: 1800000
+##  jpa:
+##    hibernate:
+##      ddl-auto: update
+###      ddl-auto: create-drop
+##    database: postgresql
+###  cassandra:
+###    contact-points: 127.0.0.1
+###    port: 9042
+###    keyspace-name: dms_data
+###    schema-action: CREATE_IF_NOT_EXISTS
+###    #    username: cassandra
+###    #    password: cassandra
+###    local-datacenter: datacenter1
+##
+##flyway:
+##  locations: classpath:db/migration
+##  keyspace: iotmining
+##  enabled: true
+##  driver-class-name: org.flywaydb.database.cassandra.CassandraDriver
+##  baseline-on-migrate: true
+##
+##
+##server:
+##  port: 8055

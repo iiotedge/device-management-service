@@ -1,20 +1,69 @@
+# ==========================================
+# 1. COMMON CONFIGURATION (Global)
+# ==========================================
+server:
+  port: ${SERVER_PORT:8055}
+
 spring:
   config:
     import: "optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888}"
   application:
-    name: IoTMining-Device-Management-Service
+    name: device-management-service
+
+  # Set 'dev' as default if no profile is specified
   profiles:
     active: ${SPRING_PROFILES_ACTIVE:dev}
 
-server:
-  port: 8055
+  # Common JPA Settings
+  jpa:
+    hibernate:
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
+    show-sql: true
+    database: postgresql
 
+  jackson:
+    default-property-inclusion: non_null
+
+
+jwt:
+  secret: "Vlo2vcFdiXGgWqZLEpLw6kk99sH8/4odgC2XgZV0IbA="
+
+internal:
+  api:
+    key: "sk_internal_9f8d7c6b5a4e3d2c1b0a9f8e7d6c5b4a"
+
+# Common Eureka Client
 eureka:
   client:
     service-url:
-      defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8761/eureka/}
+      # Default to localhost for dev, overriden by script in prod
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://admin:8506@localhost:8761/eureka/}
     fetch-registry: true
     register-with-eureka: true
   instance:
-    prefer-ip-address: true  # Use IP instead of hostname for discovery
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30
 
+    #spring:
+#  config:
+#    import: "optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888}"
+#  application:
+#    name: IoTMining-Device-Management-Service
+#  profiles:
+#    active: ${SPRING_PROFILES_ACTIVE:dev}
+#
+#server:
+#  port: 8055
+#
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: ${EUREKA_SERVICE_URL:http://admin:8506@localhost:8761/eureka/}
+#    fetch-registry: true
+#    register-with-eureka: true
+#  instance:
+#    prefer-ip-address: true  # Use IP instead of hostname for discovery
+#    lease-renewal-interval-in-seconds: 10
+#    lease-expiration-duration-in-seconds: 30
+#
