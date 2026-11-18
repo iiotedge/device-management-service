@@ -11,7 +11,7 @@
     <parent>
         <groupId>com.iiotedge.build</groupId>
         <artifactId>iiotedge-parent</artifactId>
-        <version>2025.08.18</version>
+        <version>2026.11.18</version>
         <relativePath/>
     </parent>
 
@@ -37,7 +37,7 @@
             <dependency>
                 <groupId>com.iiotedge.build</groupId>
                 <artifactId>iiotedge-bom</artifactId>
-                <version>2025.08.18</version>
+                <version>2026.11.18</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -74,7 +74,7 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web-services</artifactId>
+            <artifactId>spring-boot-starter-webservices</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -129,6 +129,14 @@
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <!-- DeviceBulkController injects a Jackson 2 ObjectMapper. Spring Boot 4 only
+             auto-configures a Jackson 3 JsonMapper; this module restores the Boot-configured
+             Jackson 2 ObjectMapper bean (same defaults as Boot 3), configured from
+             spring.jackson2.*. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-jackson2</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -136,25 +144,29 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- The Boot starter, not bare spring-kafka: Spring Boot 4 moved the Kafka
+             auto-configuration (KafkaTemplate, KafkaAdmin, listener container factory) into
+             spring-boot-kafka, which bare spring-kafka no longer brings. Keeps the Kafka
+             auto-configuration this service had on Boot 3. -->
         <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-kafka</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.iotmining.common</groupId>
             <artifactId>data</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.iotmining.common</groupId>
             <artifactId>base</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.iotmining.common</groupId>
             <artifactId>utils</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.2-SNAPSHOT</version>
         </dependency>
 
         <dependency>

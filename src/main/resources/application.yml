@@ -21,7 +21,17 @@ spring:
     show-sql: true
     database: postgresql
 
+  # Spring Boot 4 serializes REST bodies with Jackson 3, whose defaults differ from the
+  # Jackson 2 setup Boot 3 used (alphabetical property order, enums written and read via
+  # toString(), null into primitives and trailing tokens rejected, java.util.Date with
+  # "Z" instead of "+00:00"). This keeps the JSON the UI and other services see the
+  # same as on Boot 3.
   jackson:
+    use-jackson2-defaults: true
+    default-property-inclusion: non_null
+  # The Jackson 2 ObjectMapper bean (spring-boot-jackson2) reads spring.jackson2.*, not
+  # spring.jackson.*; mirrored so it stays configured as it was on Boot 3.
+  jackson2:
     default-property-inclusion: non_null
 
 
